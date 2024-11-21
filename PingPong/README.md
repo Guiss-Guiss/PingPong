@@ -11,7 +11,7 @@ Un jeu de tennis de table en Python utilisant Pygame, permettant à deux joueurs
 
 1. Clonez le dépôt ou téléchargez les fichiers source
 ```bash
-git clone https://github.com/Guiss-Guiss/PingPong
+git clone https://github.com/Guiss-Guiss/PingPong.git
 ```
 
 2. Installez les dépendances :
