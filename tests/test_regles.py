@@ -1,4 +1,3 @@
-# test_regles.py
 import pytest
 from regles_tennis_table import est_avantage, est_gagnant_jeu, est_gagnant_match
 
