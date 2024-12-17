@@ -11,55 +11,55 @@ def configurer_logging():
             os.makedirs('logs')
 
         loggers = ['tennis_table']
-        for logger_name in loggers:
-            logger = logging.getLogger(logger_name)
+        for nom_logger in loggers:
+            logger = logging.getLogger(nom_logger)
             logger.setLevel(logging.DEBUG)
             logger.handlers.clear()
             logger.propagate = False
 
-            formatter = logging.Formatter(
+            formateur = logging.Formatter(
                 '%(asctime)s - %(name)s - %(levelname)s - %(module)s - %(funcName)s - %(message)s'
             )
 
-            debug_handler = RotatingFileHandler(
+            gestionnaire_debug = RotatingFileHandler(
                 filename='logs/debug.log',
-                maxBytes=2 * 1024 * 1024,  # 2 MB
+                maxBytes=2 * 1024 * 1024,  # 2 Mo
                 backupCount=3,
                 encoding='utf-8'
             )
-            debug_handler.setLevel(logging.DEBUG)
-            debug_handler.setFormatter(formatter)
-            logger.addHandler(debug_handler)
+            gestionnaire_debug.setLevel(logging.DEBUG)
+            gestionnaire_debug.setFormatter(formateur)
+            logger.addHandler(gestionnaire_debug)
 
-            info_handler = RotatingFileHandler(
+            gestionnaire_info = RotatingFileHandler(
                 filename='logs/info.log',
-                maxBytes=1024 * 1024,  # 1 MB
+                maxBytes=1024 * 1024,  # 1 Mo
                 backupCount=2,
                 encoding='utf-8'
             )
-            info_handler.setLevel(logging.INFO)
-            info_handler.setFormatter(formatter)
-            logger.addHandler(info_handler)
+            gestionnaire_info.setLevel(logging.INFO)
+            gestionnaire_info.setFormatter(formateur)
+            logger.addHandler(gestionnaire_info)
 
-            error_handler = TimedRotatingFileHandler(
+            gestionnaire_erreur = TimedRotatingFileHandler(
                 filename='logs/error.log',
                 when='midnight',
                 interval=1,
                 backupCount=7,
                 encoding='utf-8'
             )
-            error_handler.setLevel(logging.ERROR)
-            error_handler.setFormatter(formatter)
-            logger.addHandler(error_handler)
+            gestionnaire_erreur.setLevel(logging.ERROR)
+            gestionnaire_erreur.setFormatter(formateur)
+            logger.addHandler(gestionnaire_erreur)
 
-            console_handler = logging.StreamHandler(sys.stdout)
-            console_handler.setLevel(logging.INFO)
-            console_formatter = logging.Formatter(
+            gestionnaire_console = logging.StreamHandler(sys.stdout)
+            gestionnaire_console.setLevel(logging.INFO)
+            formateur_console = logging.Formatter(
                 '%(asctime)s - %(levelname)s - %(message)s',
                 datefmt='%H:%M:%S'
             )
-            console_handler.setFormatter(console_formatter)
-            logger.addHandler(console_handler)
+            gestionnaire_console.setFormatter(formateur_console)
+            logger.addHandler(gestionnaire_console)
 
     except Exception as e:
         print(f"Erreur lors de la configuration du logging: {e}")
@@ -73,13 +73,13 @@ def nettoyer_vieux_logs():
 
         temps_actuel = time.time()
         strategies_nettoyage = {
-            'debug.log*': 3 * 24 * 3600,
-            'info.log*': 1 * 24 * 3600,
-            'error.log*': 5 * 24 * 3600
+            'debug.log*': 3 * 24 * 3600,  # 3 jours en secondes
+            'info.log*': 1 * 24 * 3600,   # 1 jour en secondes
+            'error.log*': 5 * 24 * 3600   # 5 jours en secondes
         }
 
-        for pattern, duree_retention in strategies_nettoyage.items():
-            for fichier in dossier_logs.glob(pattern):
+        for motif, duree_retention in strategies_nettoyage.items():
+            for fichier in dossier_logs.glob(motif):
                 age_fichier = temps_actuel - fichier.stat().st_mtime
                 if age_fichier > duree_retention:
                     try:
