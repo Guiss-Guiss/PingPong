@@ -63,7 +63,7 @@ def creer_regles():
             'TABLE_Y': 150,
             'LARGEUR_RAQUETTE': 60,
             'HAUTEUR_RAQUETTE': 100,
-            'VITESSE_RAQUETTE': 12,
+            'VITESSE_RAQUETTE': 10,
             'RAYON_BALLE': 7,
             'VITESSE_BALLE_MIN': 7.0,
             'VITESSE_BALLE_MAX': 18.0,
